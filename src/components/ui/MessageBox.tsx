@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils"
 import React from "react"
+import { cn } from "@/lib/utils"
 
 export const MessageBox = ({
   sender,
@@ -34,7 +34,7 @@ export const MessageBox = ({
         </div>
         <div
           className={cn(
-            "bg-secondary text-secondary-foreground text-base rounded-b-2xl p-4 max-w-lg",
+            "bg-secondary text-secondary-foreground text-base rounded-b-2xl p-4 max-w-lg border border-border",
             sender === "alpha" ? "rounded-tr-2xl rounded-tl-md" : "rounded-tr-md rounded-tl-2xl",
           )}
         >

@@ -1,4 +1,4 @@
-interface Message {
+export interface Message {
   id: number;
   content: string;
   name: "alpha" | "beta";
@@ -8,74 +8,92 @@ interface Message {
 export const messages: Message[] = [
   {
     id: 1,
-    content: "Let's discuss building a sustainable meal delivery service for busy professionals. From a market perspective, I see huge potential in this space.",
+    content: "Looking at the market data, I see tremendous opportunity in the sustainable meal delivery space. The market is growing at 15% annually, with urban professionals driving demand.",
     name: "alpha",
     timestamp: "7:36 AM"
   },
   {
     id: 2, 
-    content: "I agree there's potential, but we need to be strategic about our approach. What specific market segments should we target first?",
+    content: "The market opportunity is clear, but we need to design a product that can capture it effectively. What's our competitive positioning strategy?",
     name: "beta",
     timestamp: "7:37 AM"
   },
   {
     id: 3,
-    content: "Based on my analysis, we should focus on urban professionals aged 25-40, earning $60k+. They value convenience but are increasingly conscious about sustainability.",
+    content: "Market research shows our target demographic - urban professionals 25-40 earning $60k+ - values both convenience and sustainability. They're willing to pay 20% premium for eco-friendly options.",
     name: "alpha", 
     timestamp: "7:38 AM"
   },
   {
     id: 4,
-    content: "That's a good start, but I'm concerned about the operational complexity. How do we ensure sustainability while maintaining profitability?",
+    content: "Good market insight. Now let's design the product experience. How do we balance sustainability with operational efficiency? We need a scalable model.",
     name: "beta",
     timestamp: "7:39 AM"
   },
   {
     id: 5,
-    content: "We can partner with local organic farms and use eco-friendly packaging. The premium pricing will offset the higher costs, and consumers are willing to pay for sustainability.",
+    content: "The market supports premium pricing for sustainable options. We can partner with local organic farms and use eco-friendly packaging. Consumers are paying $3-5 more for sustainable delivery.",
     name: "alpha",
     timestamp: "7:40 AM"
   },
   {
     id: 6,
-    content: "But what about the delivery logistics? Electric vehicles and optimized routes could work, but we need to consider the initial infrastructure investment.",
+    content: "Partnerships are key to our product strategy. But we need to design the delivery infrastructure carefully - electric vehicles, optimized routes, and real-time tracking systems.",
     name: "beta",
     timestamp: "7:41 AM"
   },
   {
     id: 7,
-    content: "You raise valid concerns. We should start with a pilot program in a dense urban area to test our assumptions before scaling.",
+    content: "Market validation is crucial. We should pilot in a dense urban area first to test market assumptions and gather customer feedback on pricing sensitivity.",
     name: "alpha",
     timestamp: "7:42 AM"
   },
   {
     id: 8,
-    content: "Exactly! A pilot program would help us validate our business model. We could start with 100 customers in downtown areas and gather feedback on pricing, delivery times, and sustainability preferences.",
+    content: "Perfect approach. Let's design the pilot program with 100 customers in downtown areas. We'll test different pricing tiers, delivery windows, and menu options to optimize the product-market fit.",
     name: "beta",
     timestamp: "7:43 AM"
   },
   {
     id: 9,
-    content: "Great idea! We should also consider technology integration. A mobile app for ordering, real-time tracking, and feedback collection would enhance the user experience significantly.",
+    content: "Technology integration is essential for market penetration. A mobile app with ordering, tracking, and feedback will differentiate us from competitors and improve customer retention.",
     name: "alpha",
     timestamp: "7:44 AM"
   },
   {
     id: 10,
-    content: "Technology is crucial, but let's not forget about the human element. We'll need a dedicated customer service team to handle inquiries and ensure quality control.",
+    content: "The tech platform is our product's backbone. But we also need to design exceptional customer service - it's our key differentiator and will drive word-of-mouth growth.",
     name: "beta",
     timestamp: "7:45 AM"
   },
   {
     id: 11,
-    content: "Absolutely right. Customer service will be our differentiator. We should also implement a loyalty program to encourage repeat business and word-of-mouth referrals.",
+    content: "Customer service drives market share. We should implement a loyalty program to increase customer lifetime value and encourage referrals, which are our most cost-effective acquisition channel.",
     name: "alpha",
     timestamp: "7:46 AM"
   },
   {
     id: 12,
-    content: "This is shaping up well! Let's create a detailed business plan with financial projections, marketing strategy, and operational timeline. We should aim to launch the pilot within 6 months.",
+    content: "Great strategic thinking. Now let's design our go-to-market strategy. We need a detailed business plan with clear product milestones, marketing strategy, and operational roadmap for a 6-month launch.",
     name: "beta",
     timestamp: "7:47 AM"
+  },
+  {
+    id: 13,
+    content: "Based on market analysis, we'll need $500k initial funding for the pilot. This includes kitchen infrastructure, delivery fleet, and marketing budget to reach our target demographic.",
+    name: "alpha",
+    timestamp: "7:48 AM"
+  },
+  {
+    id: 14,
+    content: "That funding requirement aligns with our product development needs. We should explore multiple funding sources - angel investors, crowdfunding, and strategic partnerships with existing delivery platforms.",
+    name: "beta",
+    timestamp: "7:49 AM"
+  },
+  {
+    id: 15,
+    content: "Perfect! Let's start with the business plan. I'll focus on market analysis and competitive positioning, while you work on product development roadmap and operational strategy.",
+    name: "alpha",
+    timestamp: "7:50 AM"
   }
 ];

@@ -12,6 +12,7 @@ const AddConsideration = () => {
             type="text"
             placeholder="Add this consideration..."
             variant={"filled"}
+            disabled
             className="px-4 py-6 rounded-xl"
           />
           <div className="p-2 h-12 w-12 bg-secondary text-secondary-foreground rounded-xl flex justify-center items-center cursor-pointer">
