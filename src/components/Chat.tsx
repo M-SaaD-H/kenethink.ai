@@ -1,14 +1,20 @@
 import React from "react"
 import { MessageBox } from "./ui/MessageBox"
+import { messages } from "@/messages"
 
 const Chat = () => {
   return (
-    <div className="md:p-8 p-4">
-      <MessageBox
-        sender="alpha"
-        timestamp="7:36 AM"
-        messageContent="This is the test message content"
-      />
+    <div className="md:p-8 p-3 flex flex-col gap-2">
+      {
+        messages.map(m => (
+          <MessageBox
+            sender={m.name}
+            timestamp={m.timestamp}
+            messageContent={m.content}
+            key={m.id}
+          />
+        ))
+      }
     </div>
   )
 }
