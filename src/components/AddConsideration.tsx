@@ -1,13 +1,21 @@
 import React from 'react'
 import { Input } from './ui/input'
 import { IconSend } from '@tabler/icons-react'
+import { motion } from 'motion/react'
 
-const AddConsideration = () => {
+const AddConsideration = ({ isReportOpen }: { isReportOpen: boolean }) => {
   return (
-    <div className="w-full h-18">
-      <div className="max-w-4xl w-full fixed bottom-0 bg-background">
+    <div className="w-full h-18 relative">
+      <motion.div
+        initial={false}
+        animate={{
+          maxWidth: isReportOpen ? "48rem" : "56rem" // 3xl = 48rem & 4xl = 56rem
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="w-full fixed bottom-0 bg-background"
+      >
         <div className="bg-gradient-to-t from-background to-transparent h-6 w-full absolute bottom-full left-0" />
-        <div className="px-4 pb-6 flex gap-2 max-w-4xl w-full">
+        <div className="px-4 pb-6 flex gap-2 w-full">
           <Input
             type="text"
             placeholder="Add this consideration..."
@@ -19,7 +27,7 @@ const AddConsideration = () => {
             <IconSend />
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }
