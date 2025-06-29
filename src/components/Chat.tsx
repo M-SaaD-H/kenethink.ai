@@ -1,25 +1,33 @@
 "use client"
 
-import React, { useEffect, useState, useRef, useCallback, useMemo } from "react"
+import React, { useEffect, useState, useRef, useCallback } from "react"
 import { MessageBox } from "./ui/MessageBox"
 import { Message, messages } from "@/messages"
 import { AnimatePresence, motion } from "motion/react"
 
-// Animation variants for message entrance
-const messageVariants = {
-  hidden: {
-    x: 0,
-    y: 20,
-    scale: 0.95,
-    opacity: 0,
-    filter: "blur(10px)"
-  },
-  visible: {
-    x: 0,
-    y: 0,
-    scale: 1,
-    opacity: 1,
-    filter: "blur(0px)"
+// Function to create and play a pop sound
+const playPopSound = () => {
+  try {
+    if (typeof window === "undefined") return;
+
+    // @ts-expect-error have to give type "any" to window
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+    const oscillator = audioContext.createOscillator()
+    const gainNode = audioContext.createGain()
+
+    oscillator.connect(gainNode)
+    gainNode.connect(audioContext.destination)
+
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime)
+    oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1)
+
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime)
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1)
+
+    oscillator.start(audioContext.currentTime)
+    oscillator.stop(audioContext.currentTime + 0.1)
+  } catch (error) {
+    console.log('Audio playback not supported or blocked. E:', (error as Error).message);
   }
 }
 
@@ -40,7 +48,9 @@ const Chat: React.FC = () => {
         }
         return newIndex
       })
-    }, 1000)
+    }, 2000)
+    
+    window.onload = playPopSound
 
     return () => clearInterval(intervalId)
   }, [])
@@ -52,6 +62,8 @@ const Chat: React.FC = () => {
         ...prev,
         messages[currentIndex]]
       )
+      // Play pop sound when message is added
+      playPopSound()
     }
   }, [currentIndex])
 
@@ -67,7 +79,7 @@ const Chat: React.FC = () => {
 
     setUserScrolledUp(!isAtBottom)
   }, [])
-  
+
   useEffect(() => {
     const chatContainer = chatContainerRef.current
     if (!chatContainer) return
@@ -104,9 +116,20 @@ const Chat: React.FC = () => {
           currentMessageStack.map((message) => (
             <motion.div
               key={message.id}
-              variants={messageVariants}
-              initial="hidden"
-              animate="visible"
+              initial={{
+                x: message.name === "alpha" ? -30 : 30,
+                y: 30,
+                scale: 0.95,
+                opacity: 0,
+                filter: "blur(10px)"
+              }}
+              animate={{
+                x: 0,
+                y: 0,
+                scale: 1,
+                opacity: 1,
+                filter: "blur(0px)"
+              }}
               transition={{ duration: 0.3 }}
             >
               <MessageBox
