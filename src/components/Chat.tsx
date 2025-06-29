@@ -1,69 +1,97 @@
 "use client"
 
-import React, { useEffect, useState, useRef } from "react"
+import React, { useEffect, useState, useRef, useCallback, useMemo } from "react"
 import { MessageBox } from "./ui/MessageBox"
 import { Message, messages } from "@/messages"
 import { AnimatePresence, motion } from "motion/react"
 
-const Chat = () => {
-  const [currentMessageStack, setCurrentMessageStack] = useState<Message[] | []>([]);
-  const [idx, setIdx] = useState(0);
-  const [userScrolledUp, setUserScrolledUp] = useState(false);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+// Animation variants for message entrance
+const messageVariants = {
+  hidden: {
+    x: 0,
+    y: 20,
+    scale: 0.95,
+    opacity: 0,
+    filter: "blur(10px)"
+  },
+  visible: {
+    x: 0,
+    y: 0,
+    scale: 1,
+    opacity: 1,
+    filter: "blur(0px)"
+  }
+}
 
-  const isAlpha: boolean = currentMessageStack[currentMessageStack.length-1] && currentMessageStack[currentMessageStack.length-1].name === "alpha";
+const Chat: React.FC = () => {
+  const [currentMessageStack, setCurrentMessageStack] = useState<Message[]>([])
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [userScrolledUp, setUserScrolledUp] = useState(false)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
 
+  // Auto-advance messages
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setIdx(prevIdx => {
-        const newIdx = prevIdx + 1;
-        // Stop the interval if we've reached the end of messages
-        if (newIdx >= messages.length) {
-          clearInterval(intervalId);
+      setCurrentIndex(prevIndex => {
+        const newIndex = prevIndex + 1
+        if (newIndex >= messages.length) {
+          clearInterval(intervalId)
+          return prevIndex
         }
-        return newIdx;
-      });
+        return newIndex
+      })
     }, 1000)
 
-    return () => clearInterval(intervalId);
+    return () => clearInterval(intervalId)
   }, [])
 
+  // Add new messages to the stack
   useEffect(() => {
-    console.log("current idx =", idx);
-    if (messages[idx]) {
-      setCurrentMessageStack(prev => ([
+    if (messages[currentIndex]) {
+      setCurrentMessageStack(prev => [
         ...prev,
-        messages[idx]
-      ]))
+        messages[currentIndex]]
+      )
     }
-  }, [idx])
+  }, [currentIndex])
 
   // Handle scroll events
+  const handleUserScroll = useCallback(() => {
+    const chatContainer = chatContainerRef.current
+    if (!chatContainer) return
+
+    const { scrollTop, scrollHeight, clientHeight } = chatContainer
+    const threshold = 10
+    const inputAndNavbarHeight = 144 // 72px * 2 for input box and navbar
+    const isAtBottom = scrollTop + clientHeight >= scrollHeight - threshold - inputAndNavbarHeight
+
+    setUserScrolledUp(!isAtBottom)
+  }, [])
+  
+  useEffect(() => {
+    const chatContainer = chatContainerRef.current
+    if (!chatContainer) return
+
+    chatContainer.addEventListener("scroll", handleUserScroll)
+
+    // Initial check after a short delay to ensure proper layout
+    const initialCheck = setTimeout(handleUserScroll, 100)
+
+    return () => {
+      chatContainer.removeEventListener("scroll", handleUserScroll)
+      clearTimeout(initialCheck)
+    }
+  }, [handleUserScroll])
+
+  // Auto-scroll to bottom when new messages are added
   useEffect(() => {
     const chatContainer = chatContainerRef.current;
-    if (!chatContainer) return;
+    if (!chatContainer || userScrolledUp) return
 
-    const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = chatContainer;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 10 - 72 - 72; // 10px threshold and 72px is the size of the input box
-      setUserScrolledUp(!isAtBottom);
-    };
-
-    chatContainer.addEventListener("scroll", handleScroll);
-    // Initial check
-    setTimeout(handleScroll, 100);
-
-    return () => chatContainer.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Auto-scroll to bottom when new messages are added (only if user hasn't scrolled up)
-  useEffect(() => {
-    if (chatContainerRef.current && !userScrolledUp) {
-      chatContainerRef.current.scrollTo({
-        top: chatContainerRef.current.scrollHeight + 72 + 72 + 10,
-        behavior: "smooth"
-      });
-    }
+    chatContainer.scrollTo({
+      top: chatContainer.scrollHeight + 144 + 10, // inputAndNavbarHeight + threshold
+      behavior: "smooth"
+    })
   }, [currentMessageStack, userScrolledUp]);
 
   return (
@@ -73,31 +101,18 @@ const Chat = () => {
     >
       <AnimatePresence>
         {
-          currentMessageStack.map(m => (
+          currentMessageStack.map((message) => (
             <motion.div
-              initial={{
-                x: isAlpha ? -20 : 20,
-                y: 20,
-                scale: 0.95,
-                opacity: 0,
-                filter: "blur(10px)"
-              }}
-              animate={{
-                x: 0,
-                y: 0,
-                scale: 1,
-                opacity: 1,
-                filter: "blur(0px)"
-              }}
-              transition={{
-                duration: 0.3
-              }}
-              key={m.id}
+              key={message.id}
+              variants={messageVariants}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.3 }}
             >
               <MessageBox
-                sender={m.name}
-                timestamp={m.timestamp}
-                messageContent={m.content}
+                sender={message.name}
+                timestamp={message.timestamp}
+                messageContent={message.content}
               />
             </motion.div>
           ))

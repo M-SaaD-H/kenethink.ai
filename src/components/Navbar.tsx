@@ -3,9 +3,9 @@
 import React from "react"
 import Link from "next/link"
 import DarkModeToggle from "./ui/dark-mode-toggle"
-import { IconReport } from "@tabler/icons-react"
+import { IconReport, IconX } from "@tabler/icons-react"
 import { Button } from "./ui/button"
-import { motion } from "motion/react"
+import { AnimatePresence, motion } from "motion/react"
 
 interface NavbarProps {
   onReportClick: () => void;
@@ -30,13 +30,37 @@ const Navbar = ({ onReportClick, isReportOpen }: NavbarProps) => {
         </Link>
         <div className="flex gap-2 items-center">
           <DarkModeToggle />
-          <Button 
-            size={"icon"} 
-            variant={"secondary"} 
-            className="rounded-full p-2" 
+          <Button
+            size={"icon"}
+            variant={"secondary"}
+            className="rounded-full p-2"
             onClick={onReportClick}
           >
-            <IconReport size={20} />
+            <AnimatePresence mode="wait" initial={false}>
+              {
+                isReportOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <IconX size={20} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="report"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <IconReport size={20} />
+                  </motion.div>
+                )
+              }
+            </AnimatePresence>
           </Button>
         </div>
       </motion.div>

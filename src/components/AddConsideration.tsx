@@ -12,9 +12,9 @@ const AddConsideration = ({ isReportOpen }: { isReportOpen: boolean }) => {
           maxWidth: isReportOpen ? "48rem" : "56rem" // 3xl = 48rem & 4xl = 56rem
         }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="w-full fixed bottom-0 bg-background"
+        className="w-full fixed bottom-0 bg-background dark:bg-neutral-900"
       >
-        <div className="bg-gradient-to-t from-background to-transparent h-6 w-full absolute bottom-full left-0" />
+        <div className="bg-gradient-to-t from-background dark:from-neutral-900 to-transparent h-6 w-full absolute bottom-full left-0" />
         <div className="px-4 pb-6 flex gap-2 w-full">
           <Input
             type="text"

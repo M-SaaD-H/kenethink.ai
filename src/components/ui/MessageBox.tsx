@@ -30,7 +30,7 @@ export const MessageBox = ({
           )}
         >
           <h3 className="font-medium">Agent {sender === "alpha" ?  "Alpha" : "Beta"}</h3>
-          <p className="text-sm text-muted-foreground">7:36 AM</p>
+          <p className="text-sm text-muted-foreground">{timestamp}</p>
         </div>
         <div
           className={cn(

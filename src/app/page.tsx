@@ -1,33 +1,55 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddConsideration from "@/components/AddConsideration";
 import Chat from "@/components/Chat";
 import Navbar from "@/components/Navbar";
+import Report from "@/components/Report";
 import { AnimatePresence, motion } from "motion/react";
-import { Button } from "@/components/ui/button";
+import { checkDevice, cn } from "@/lib/utils";
 
 export default function Home() {
   const [isReportOpen, setIsReportOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(checkDevice());
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <motion.div
       initial={false}
       animate={{
-        maxWidth: isReportOpen ? "80rem" : "56rem" // 4xl = 56rem & 7xl = 80rem
+        maxWidth: isReportOpen ? "80rem" : "56rem"
       }}
-      transition={{ duration: 0.3 }}
+      transition={{
+        duration: 0.25,
+        ease: "easeOut"
+      }}
       className="w-full mx-auto h-screen overflow-hidden"
+      style={{ willChange: "max-width" }}
     >
       <Navbar onReportClick={() => setIsReportOpen(!isReportOpen)} isReportOpen={isReportOpen} />
-      <div className="flex gap-4 justify-between h-full w-full">
+      <div className="flex gap-4 justify-between h-full w-full relative">
         <motion.div
           initial={false}
           animate={{
             maxWidth: isReportOpen ? "48rem" : "56rem" // 3xl = 48rem & 4xl = 56rem
           }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
+          transition={{
+            duration: 0.25,
+            ease: "easeOut"
+          }}
           className="h-full w-full max-w-4xl"
+          style={{ willChange: "max-width" }}
         >
           <Chat />
           <AddConsideration isReportOpen={isReportOpen} />
@@ -38,21 +60,31 @@ export default function Home() {
               <motion.div
                 initial={{
                   opacity: 0,
-                  filter: "blur(15px)",
-                  x: 30
+                  scale: 0.95,
+                  x: isDesktop ? 20 : 0,
+                  y: isDesktop ? 0 : 20
                 }}
                 animate={{
                   opacity: 1,
-                  filter: "blur(0px)",
-                  x: 0
+                  scale: 1,
+                  x: 0,
+                  y: 0
                 }}
                 exit={{
                   opacity: 0,
-                  filter: "blur(15px)",
-                  x: 30
+                  scale: 0.95,
+                  x: isDesktop ? 20 : 0,
+                  y: isDesktop ? 0 : 20
                 }}
-                transition={{ duration: 0.2 }}
-                className="h-screen flex-1"
+                transition={{
+                  duration: 0.2,
+                  ease: "easeOut"
+                }}
+                className={cn(
+                  "h-screen flex-1",
+                  !isDesktop && "absolute inset-0 bg-background"
+                )}
+                style={{ willChange: "transform, opacity" }}
               >
                 <Report />
               </motion.div>
@@ -63,31 +95,3 @@ export default function Home() {
     </motion.div>
   )
 }
-
-
-const Report = () => (
-  <div className="h-[88%] w-full my-4">
-    <h3 className="font-sans font-bold tracking-tight text-3xl">Report</h3>
-    <div className="bg-card text-card-foreground border border-border rounded-xl p-4 my-6">
-      <h3 className="font-sans font-medium tracking-tight text-xl">Formulated Idea</h3>
-      <div className="space-y-4 my-2">
-        <div>
-          <h4 className="font-medium text-sm text-foreground mb-1">Target Customers</h4>
-          <p className="text-muted-foreground text-sm">Urban professionals aged 25-40 with $60k+ income who value convenience and sustainability</p>
-        </div>
-        <div>
-          <h4 className="font-medium text-sm text-foreground mb-1">USPs</h4>
-          <p className="text-muted-foreground text-sm">Organic farm partnerships, electric vehicle delivery, mobile app with real-time tracking, exceptional customer service, loyalty programs, sustainable packaging</p>
-        </div>
-        <div>
-          <h4 className="font-medium text-sm text-foreground mb-1">Identified Challenges</h4>
-          <p className="text-muted-foreground text-sm">Balancing sustainability with operational efficiency, scaling delivery infrastructure, market validation through pilot program, securing $500k initial funding</p>
-        </div>
-      </div>
-    </div>
-    <div className="grid grid-cols-2 gap-2 mt-8 font-medium">
-      <Button>Refine Idea</Button>
-      <Button>Explore Alternatives</Button>
-    </div>
-  </div>
-)
