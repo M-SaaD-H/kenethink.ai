@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KeneThink – AI Agents for Startup Founders
+
+This project is a React (Next.js) single-page app that visualizes how multiple AI agents can collaborate to help startup founders solve business problems.
+
+## Scenario
+
+The UI simulates a chat between two agents:
+- **Agent Alpha** (Market Analyst)
+- **Agent Beta** (Product Strategist)
+
+They discuss:  
+**"Build a sustainable meal delivery service for busy professionals."**
+
+The conversation is shown as a modern, responsive chat interface, with a dedicated section for the formulated idea and key recommendations (target customers, USPs, challenges). Non-functional UI elements like "Add This Consideration", "Refine Idea", and "Explore Alternatives" are included for layout realism.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## UX Rationale
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The design focuses on clarity and flow - each agent's messages are visually distinct, making it easy to follow the debate. The "Formulated Idea" section summarizes the collaborative output, so founders can quickly grasp actionable insights. The interface is clean, modern, and fully responsive, ensuring a smooth experience on any device.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+If you have a live deployment URL, add it here:
 
-To learn more about Next.js, take a look at the following resources:
+**Live Demo:** [Kenethik AI](https://kenethink-ai.vercel.app)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Feel free to reach out for any clarifications!
