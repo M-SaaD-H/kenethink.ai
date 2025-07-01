@@ -17,7 +17,13 @@ export const MessageBox = ({
         sender === "alpha" ? "flex-row" : "flex-row-reverse"
       )}
     >
-      <div className="h-10 w-10 shrink-0 bg-foreground text-background my-3 rounded-full flex justify-center items-center text-xl">
+      <div
+        className={cn(
+          "h-10 w-10 shrink-0 bg-foreground text-black my-3 rounded-full flex justify-center items-center text-xl",
+          "shadow-[0_1px_1px_rgba(0,0,0,0.05),0_4px_6px_rgba(34,42,53,0.04),0_24px_68px_rgba(47,48,55,0.05),0_2px_3px_rgba(0,0,0,0.04)]",
+          sender === "alpha" ? "bg-blue-200" : "bg-purple-200",
+        )}
+      >
         {
           sender === "alpha" ? <>&alpha;</> : <>&beta;</>
         }

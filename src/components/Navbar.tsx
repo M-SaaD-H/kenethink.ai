@@ -3,16 +3,17 @@
 import React from "react"
 import Link from "next/link"
 import DarkModeToggle from "./ui/dark-mode-toggle"
-import { IconReport, IconX } from "@tabler/icons-react"
+import { IconReport, IconRotate, IconX } from "@tabler/icons-react"
 import { Button } from "./ui/button"
 import { AnimatePresence, motion } from "motion/react"
 
 interface NavbarProps {
   onReportClick: () => void;
   isReportOpen: boolean;
+  onRefresh: () => void;
 }
 
-const Navbar = ({ onReportClick, isReportOpen }: NavbarProps) => {
+const Navbar = ({ onReportClick, isReportOpen, onRefresh }: NavbarProps) => {
   return (
     <div className="h-17 w-full relative">
       <motion.div
@@ -29,6 +30,9 @@ const Navbar = ({ onReportClick, isReportOpen }: NavbarProps) => {
           </h2>
         </Link>
         <div className="flex gap-2 items-center">
+          <Button size={"icon"} variant={"secondary"} className="rounded-full" onClick={onRefresh}>
+            <IconRotate size={20} />
+          </Button>
           <DarkModeToggle />
           <Button
             size={"icon"}
